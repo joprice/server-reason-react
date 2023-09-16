@@ -69,13 +69,14 @@ let browser_only_on_expressions_rule =
         | Pexp_apply (expression, _) ->
             let stringified = Ppxlib.Pprintast.string_of_expression payload in
             let message = Builder.estring ~loc stringified in
-            [%expr raise ReactDOM.Impossible_in_ssr [%e message]]
+            [%expr raise (ReactDOM.Impossible_in_ssr [%e message])]
         | Pexp_fun (_arg_label, _arg_expression, fun_pattern, _expression) ->
             let stringified = Ppxlib.Pprintast.string_of_expression payload in
             let message = Builder.estring ~loc stringified in
             [%expr
               fun [%p fun_pattern] ->
-                (raise ReactDOM.Impossible_in_ssr [%e message] [@warning "-27"])]
+                (raise
+                   (ReactDOM.Impossible_in_ssr [%e message]) [@warning "-27"])]
         | Pexp_let (rec_flag, value_bindings, expression) ->
             let pexp_let =
               Builder.pexp_let ~loc rec_flag
