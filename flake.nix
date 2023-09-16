@@ -34,13 +34,13 @@
     rec {
       devShells.default = pkgs.mkShell {
         buildInputs = [
+          alcotest
+          alcotest-lwt
+          fmt
           lwt
           lwt_ppx
           ocamlPackages.melange
           ocaml_pcre
-          alcotest
-          alcotest-lwt
-          fmt
           ppxlib
           reason-react
         ];

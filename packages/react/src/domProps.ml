@@ -1092,8 +1092,8 @@ module SVG = struct
       Attribute { name = "opacity"; jsxName = "opacity"; type_ = String (* number | *) };
       Attribute { name = "operator"; jsxName = "operator"; type_ = String (* number | *) };
       Attribute { name = "overflow"; jsxName = "overflow"; type_ = String (* number | *) };
-      Attribute { name = "stopOpacity"; jsxName = "stopOpacity"; type_ = String (* number | *) };
-      Attribute { name = "strokeLinecap"; jsxName = "strokeLinecap"; type_ = String (* type_= "butt" | "round" | "square" | "inherit" *) };
+      Attribute { name = "stop-opacity"; jsxName = "stopOpacity"; type_ = String (* number | *) };
+      Attribute { name = "stroke-linecap"; jsxName = "strokeLinecap"; type_ = String (* type_= "butt" | "round" | "square" | "inherit" *) };
       Attribute { name = "unicodeBidi"; jsxName = "unicodeBidi"; type_ = String (* number | *) };
       Attribute { name = "vectorEffect"; jsxName = "vectorEffect"; type_ = String (* number | *) };
       Attribute { name = "wordSpacing"; jsxName = "wordSpacing"; type_ = String (* number | *) };
@@ -1179,7 +1179,7 @@ module SVG = struct
       Attribute { name = "baseProfile"; jsxName = "baseProfile"; type_ = String (* number | *) };
       Attribute { name = "bbox"; jsxName = "bbox"; type_ = String (* number | *) };
       Attribute { name = "bias"; jsxName = "bias"; type_ = String (* number | *) };
-      Attribute { name = "capHeight"; jsxName = "capHeight"; type_ = String (* number | *) };
+      Attribute { name = "cap-height"; jsxName = "capHeight"; type_ = String (* number | *) };
       Attribute { name = "cx"; jsxName = "cx"; type_ = String (* number | *) };
       Attribute { name = "cy"; jsxName = "cy"; type_ = String (* number | *) };
       Attribute { name = "d"; jsxName = "d"; type_ = String };
@@ -1231,7 +1231,7 @@ module SVG = struct
       Attribute { name = "orient"; jsxName = "orient"; type_ = String (* number | *) };
       Attribute { name = "orientation"; jsxName = "orientation"; type_ = String (* number | *) };
       Attribute { name = "origin"; jsxName = "origin"; type_ = String (* number | *) };
-      Attribute { name = "overlineThickness"; jsxName = "overlineThickness"; type_ = Int };
+      Attribute { name = "overline-thickness"; jsxName = "overlineThickness"; type_ = Int };
       Attribute { name = "paintOrder"; jsxName = "paintOrder"; type_ = String (* number | *) };
       Attribute { name = "panose1"; jsxName = "panose1"; type_ = String (* number | *) };
       Attribute { name = "path"; jsxName = "path"; type_ = String };
@@ -1260,9 +1260,9 @@ module SVG = struct
       Attribute { name = "stemh"; jsxName = "stemh"; type_ = String (* number | *) };
       Attribute { name = "stemv"; jsxName = "stemv"; type_ = String (* number | *) };
       Attribute { name = "stitchTiles"; jsxName = "stitchTiles"; type_ = String (* number | *) };
-      Attribute { name = "strikethroughPosition"; jsxName = "strikethroughPosition"; type_ = String (* number | *) };
-      Attribute { name = "strikethroughThickness"; jsxName = "strikethroughThickness"; type_ = String (* number | *) };
-      Attribute { name = "strokeWidth"; jsxName = "strokeWidth"; type_ = String (* number | *) };
+      Attribute { name = "strikethrough-position"; jsxName = "strikethroughPosition"; type_ = String (* number | *) };
+      Attribute { name = "strikethrough-thickness"; jsxName = "strikethroughThickness"; type_ = String (* number | *) };
+      Attribute { name = "stroke-width"; jsxName = "strokeWidth"; type_ = String (* number | *) };
       Attribute { name = "surfaceScale"; jsxName = "surfaceScale"; type_ = String (* number | *) };
       Attribute { name = "targetX"; jsxName = "targetX"; type_ = String (* number | *) };
       Attribute { name = "targetY"; jsxName = "targetY"; type_ = String (* number | *) };
