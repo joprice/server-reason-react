@@ -1077,7 +1077,7 @@ module SVG = struct
       Attribute { name = "display"; jsxName = "display"; type_ = String (* number | *) };
       Attribute { name = "divisor"; jsxName = "divisor"; type_ = String (* number | *) };
       Attribute { name = "fillOpacity"; jsxName = "fillOpacity"; type_ = String (* number | *) };
-      Attribute { name = "fillRule"; jsxName = "fillRule"; type_ = String (* type_= "nonzero" | "evenodd" | "inherit" *) };
+      Attribute { name = "fill-rule"; jsxName = "fillRule"; type_ = String (* type_= "nonzero" | "evenodd" | "inherit" *) };
       Attribute { name = "floodColor"; jsxName = "floodColor"; type_ = String (* number | *) };
       Attribute { name = "floodOpacity"; jsxName = "floodOpacity"; type_ = String (* number | *) };
       Attribute { name = "fontSize"; jsxName = "fontSize"; type_ = String (* number | *) };
