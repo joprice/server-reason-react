@@ -7,7 +7,13 @@
   server-reason-react.reactDom
   server-reason-react.js
   server-reason-react.belt)
+ (modules :standard \ server)
  (preprocess
   (pps melange.ppx browser_ppx server-reason-react.ppx)))
 
 (copy_files# "../*.re")
+
+(executable 
+  (name server)
+  (modules server)
+  (libraries shared_native))

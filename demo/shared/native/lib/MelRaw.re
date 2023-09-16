@@ -34,3 +34,5 @@ let%browser_only initWebsocket = [%mel.raw
 })()
 |}
 ];
+
+let x = 1;
