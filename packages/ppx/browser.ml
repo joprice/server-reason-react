@@ -3,7 +3,7 @@ module Builder = Ast_builder.Default
 
 type target = Native | Js
 
-let mode = ref Native
+let mode = ref Js
 
 let effect_rule =
   let extractor = Ast_pattern.(__') in
