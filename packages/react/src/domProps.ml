@@ -778,7 +778,7 @@ let keygenHTMLAttributes =
 let labelHTMLAttributes =
   [
     Attribute { name = "form"; jsxName = "form"; type_ = String };
-    Attribute { name = "htmlFor"; jsxName = "htmlFor"; type_ = String };
+    Attribute { name = "for"; jsxName = "htmlFor"; type_ = String };
   ]
 
 let liHTMLAttributes =
@@ -888,7 +888,7 @@ let optionHTMLAttributes =
 let outputHTMLAttributes =
   [
     Attribute { name = "form"; jsxName = "form"; type_ = String };
-    Attribute { name = "htmlFor"; jsxName = "htmlFor"; type_ = String };
+    Attribute { name = "for"; jsxName = "htmlFor"; type_ = String };
     Attribute { name = "name"; jsxName = "name"; type_ = String };
   ]
 
