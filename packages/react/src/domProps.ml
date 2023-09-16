@@ -1047,7 +1047,7 @@ module SVG = struct
   let stylingAttributes =
     (* https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/Styling *)
     [
-      Attribute { name = "className"; jsxName = "className"; type_ = String };
+      Attribute { name = "class"; jsxName = "className"; type_ = String };
       Attribute { name = "style"; jsxName = "style"; type_ = Style }
     ]
 
