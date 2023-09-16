@@ -3,7 +3,7 @@ module Builder = Ast_builder.Default
 
 type target = Native | Js
 
-let mode = ref Js
+let mode = ref Native
 
 let effect_rule =
   let extractor = Ast_pattern.(__') in
@@ -139,6 +139,8 @@ let browser_only_on_structure_item =
        extractor handler)
 
 let () =
+  print_endline "args";
+  Sys.argv |> Array.iter print_endline;
   Driver.add_arg "-js"
     (Unit (fun () -> mode := Js))
     ~doc:"preprocess for js build";
