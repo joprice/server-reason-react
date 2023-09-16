@@ -1071,7 +1071,7 @@ module SVG = struct
       Attribute { name = "transform"; jsxName = "transform"; type_ = String };
       Attribute { name = "transformOrigin"; jsxName = "transformOrigin"; type_ = String };
       Attribute { name = "alignmentBaseline"; jsxName = "alignmentBaseline"; type_ = String (* "auto" | "baseline" | "before-edge" | "text-before-edge" | "middle" | "central" | "after-edge" "text-after-edge" | "ideographic" | "alphabetic" | "hanging" | "mathematical" | "inherit" *) };
-      Attribute { name = "clipRule"; jsxName = "clipRule"; type_ = (* number | "linearRGB" | "inherit" *) String };
+      Attribute { name = "clip-rule"; jsxName = "clipRule"; type_ = (* number | "linearRGB" | "inherit" *) String };
       Attribute { name = "colorProfile"; jsxName = "colorProfile"; type_ = String (* number | *) };
       Attribute { name = "direction"; jsxName = "direction"; type_ = String (* number | *) };
       Attribute { name = "display"; jsxName = "display"; type_ = String (* number | *) };
