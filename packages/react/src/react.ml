@@ -146,14 +146,14 @@ let createElement tag attributes children =
 
 (* cloneElements overrides childrens but is not always obvious what to do with
    Provider, Consumer or Suspense. TODO: Check original (JS) implementation *)
-let cloneElement element new_attributes new_childrens =
+let cloneElement element new_attributes =
   match element with
-  | Lower_case_element { tag; attributes; children = _ } ->
+  | Lower_case_element { tag; attributes; children } ->
       Lower_case_element
         {
           tag;
           attributes = clone_attributes attributes new_attributes;
-          children = new_childrens;
+          children;
         }
   | Fragment _childrens -> Fragment _childrens
   | Text t -> Text t

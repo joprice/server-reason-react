@@ -76,7 +76,7 @@ exception Invalid_children of string
 
 val createElement : string -> JSX.prop array -> element list -> element
 val fragment : children:element -> unit -> element
-val cloneElement : element -> JSX.prop array -> element list -> element
+val cloneElement : element -> JSX.prop array -> element
 val string : string -> element
 val null : element
 val int : int -> element

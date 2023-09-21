@@ -37,13 +37,13 @@ module AbortController : sig
   type t = abortController
 
   (* Experimental API *)
-  external signal : t -> signal = "signal" [@@mel.get]
+  val signal : t -> signal
 
   (* Experimental API *)
-  external abort : unit = "abort" [@@mel.send.pipe: t]
+  val abort : unit -> unit
 
   (* Experimental API *)
-  external make : unit -> t = "AbortController" [@@mel.new]
+  val make : unit -> t
 end
 
 type referrerPolicy =
