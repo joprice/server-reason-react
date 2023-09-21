@@ -4,6 +4,8 @@ module Dom = struct
   type element
 end
 
+type 'value ref = { mutable current : 'value }
+
 module Ref = struct
   type t = domRef
   type currentDomRef = Dom.element Js.nullable ref
@@ -13,8 +15,8 @@ module Ref = struct
   external callbackDomRef : callbackDomRef -> domRef = "%identity"
 end
 
-let createRef () = ref None
-let useRef value = ref value
+let createRef () = { current = None }
+let useRef value = { current = value }
 let forwardRef f = f ()
 
 module JSX = struct
@@ -208,9 +210,9 @@ module Context = struct
 end
 
 let createContext (initial_value : 'a) : 'a Context.t =
-  let ref_value = ref initial_value in
+  let ref_value = { current = initial_value } in
   let provider ~value ~children () =
-    ref_value.contents <- value;
+    ref_value.current <- value;
     Provider children
   in
   let consumer ~children = Consumer children in
@@ -240,7 +242,7 @@ let use promise =
   | Fail e -> raise e
   | Return v -> v
 
-let useContext context = context.current_value.contents
+let useContext context = context.current_value.current
 
 let useState (make_initial_value : unit -> 'state) =
   let initial_value : 'state = make_initial_value () in
