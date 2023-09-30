@@ -75,12 +75,17 @@ module Browser_only = struct
             in
             { vb with pvb_attributes = [ remove_unused_variable_warning27 ] }
         | _ ->
-            Builder.value_binding ~loc ~pat:pattern
-              ~expr:
-                [%expr
-                  [%ocaml.error
-                    "browser only works on expressions or function definitions"]]
-        )
+            let warning27 =
+              Builder.attribute ~loc ~name:{ txt = "warning"; loc }
+                ~payload:(PStr [ [%stri "-26"] ])
+            in
+            let vb =
+              Builder.value_binding ~loc ~pat:pattern
+                ~expr:[%expr [%e expression]]
+            in
+            { vb with pvb_attributes = [ warning27 ] }
+            (*[%ocaml.error
+              "browser only works on expressions or function definitions"]]*))
 
   let expression_rule =
     let extractor = Ast_pattern.(single_expr_payload __) in
@@ -164,6 +169,14 @@ module Browser_only = struct
               in
               let item = { fn with pexp_attributes = expr.pexp_attributes } in
               [%stri let [%p pattern] = [%e item] [@@warning "-27-32"]]
+          (*
+          | Pexp_fun (_arg_label, _arg_expression, fun_pattern, expr) ->
+              let message = Ppxlib.Pprintast.string_of_expression expression in
+              [%stri
+                let[@warning "-27-32"] [%p pattern] =
+                 fun [%p fun_pattern] ->
+                  [%e last_expr_to_raise_impossbile message expr]]
+                  *)
           | _expr -> do_nothing rec_flag)
     in
     Context_free.Rule.extension
