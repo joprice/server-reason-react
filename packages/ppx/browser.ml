@@ -36,6 +36,11 @@ module Effect = struct
 end
 
 module Browser_only = struct
+  let impossible ~label loc message =
+    let message = "[" ^ label ^ "]" ^ ": " ^ message in
+    let message = Builder.estring ~loc message in
+    [%expr raise (ReactDOM.Impossible_in_ssr [%e message])]
+
   let browser_only_value_binding pattern expression =
     let loc = pattern.ppat_loc in
     let rec last_expr_to_raise_impossbile name expr =
@@ -55,9 +60,7 @@ module Browser_only = struct
             pexp_attributes =
               remove_unused_variable_warning27 ~loc :: expr.pexp_attributes;
           }
-      | _ ->
-          let message = Builder.estring ~loc name in
-          [%expr raise (ReactDOM.Impossible_in_ssr [%e message])]
+      | _ -> impossible ~label:"value-binding" loc name
     in
     match pattern with
     | [%pat? ()] -> Builder.value_binding ~loc ~pat:pattern ~expr:[%expr ()]
@@ -83,9 +86,7 @@ module Browser_only = struct
               Builder.value_binding ~loc ~pat:pattern
                 ~expr:[%expr [%e expression]]
             in
-            { vb with pvb_attributes = [ warning27 ] }
-            (*[%ocaml.error
-              "browser only works on expressions or function definitions"]]*))
+            { vb with pvb_attributes = [ warning27 ] })
 
   let expression_rule =
     let extractor = Ast_pattern.(single_expr_payload __) in
@@ -99,16 +100,22 @@ module Browser_only = struct
               let stringified =
                 Ppxlib.Pprintast.string_of_expression expression
               in
-              let message = Builder.estring ~loc stringified in
-              [%expr raise (ReactDOM.Impossible_in_ssr [%e message])]
+              impossible ~label:"expression-apply" loc stringified
           | Pexp_fun (arg_label, arg_expression, pattern, expr) ->
               let stringified = Ppxlib.Pprintast.string_of_expression payload in
-              let message = Builder.estring ~loc stringified in
               let fn =
                 Builder.pexp_fun ~loc arg_label arg_expression pattern
-                  [%expr raise (ReactDOM.Impossible_in_ssr [%e message])]
+                  (impossible ~label:"expression-fun" loc stringified)
               in
-              { fn with pexp_attributes = expr.pexp_attributes }
+              {
+                fn with
+                pexp_attributes =
+                  expr.pexp_attributes
+                  @ [
+                      Builder.attribute ~loc ~name:{ txt = "warning"; loc }
+                        ~payload:(PStr [ [%stri "-27"] ]);
+                    ];
+              }
           | Pexp_let (rec_flag, value_bindings, expression) ->
               let pexp_let =
                 Builder.pexp_let ~loc rec_flag
@@ -152,9 +159,7 @@ module Browser_only = struct
                 (last_expr_to_raise_impossbile name expression)
             in
             { fn with pexp_attributes = expr.pexp_attributes }
-        | _ ->
-            let message = Builder.estring ~loc name in
-            [%expr raise (ReactDOM.Impossible_in_ssr [%e message])]
+        | _ -> impossible ~label:"structure-item-fun" loc name
       in
       match !mode with
       (* When it's Js, keep item as it is *)
@@ -168,15 +173,7 @@ module Browser_only = struct
                   (last_expr_to_raise_impossbile name expr)
               in
               let item = { fn with pexp_attributes = expr.pexp_attributes } in
-              [%stri let [%p pattern] = [%e item] [@@warning "-27-32"]]
-          (*
-          | Pexp_fun (_arg_label, _arg_expression, fun_pattern, expr) ->
-              let message = Ppxlib.Pprintast.string_of_expression expression in
-              [%stri
-                let [%p pattern] =
-                 fun [%p fun_pattern] ->
-                  [%e last_expr_to_raise_impossbile message expr]]
-                  *)
+              [%stri let[@warning "-27-32"] [%p pattern] = [%e item]]
           | _expr -> do_nothing rec_flag)
     in
     Context_free.Rule.extension
