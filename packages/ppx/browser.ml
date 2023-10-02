@@ -173,7 +173,7 @@ module Browser_only = struct
           | Pexp_fun (_arg_label, _arg_expression, fun_pattern, expr) ->
               let message = Ppxlib.Pprintast.string_of_expression expression in
               [%stri
-                let[@warning "-27-32"] [%p pattern] =
+                let [%p pattern] =
                  fun [%p fun_pattern] ->
                   [%e last_expr_to_raise_impossbile message expr]]
                   *)
