@@ -207,45 +207,49 @@ module Browser_only = struct
       match !mode with
       (* When it's -js, keep item as it is *)
       | Js -> do_nothing rec_flag
-      | Native -> (
-          match expression.pexp_desc with
-          | Pexp_fun (arg_label, arg_expression, fun_pattern, expr) ->
-              let original_function_name =
-                get_function_name pattern.ppat_desc
-              in
-              let pat =
-                {
-                  fun_pattern with
-                  ppat_attributes = [ (* enable_alert_browser_only ~loc *) ];
-                }
-              in
-              let fn =
-                Builder.pexp_fun ~loc arg_label arg_expression pat
-                  (last_expr_to_raise_impossible original_function_name expr)
-              in
-              let item = { fn with pexp_attributes = expr.pexp_attributes } in
-              [%stri
-                let ([%p pattern]
-                    [@alert
-                      browser_only
-                        "This expression is marked to only run on the browser \
-                         where JavaScript can run. You can only use it inside \
-                         a let%browser_only function."]) =
-                  [%e item]
-                [@@warning "-27-32"] [@@alert "-browser_only"]]
-          | Pexp_ident { txt = longident; loc } ->
-              let stringified = Ppxlib.Longident.name longident in
-              let message = Builder.estring ~loc stringified in
-              [%stri
-                let ([%p pattern]
-                    [@alert
-                      browser_only
-                        "This expression is marked to only run on the browser \
-                         where JavaScript can run. You can only use it inside \
-                         a let%browser_only function."]) =
-                  Runtime.fail_impossible_action_in_ssr [%e message]
-                [@@alert "-browser_only"]]
-          | _expr -> do_nothing rec_flag)
+      | Native ->
+          let rec handle_expr expression =
+            match expression.pexp_desc with
+            | Pexp_constraint (expression, _) -> handle_expr expression
+            | Pexp_fun (arg_label, arg_expression, fun_pattern, expr) ->
+                let original_function_name =
+                  get_function_name pattern.ppat_desc
+                in
+                let pat =
+                  {
+                    fun_pattern with
+                    ppat_attributes = [ (* enable_alert_browser_only ~loc *) ];
+                  }
+                in
+                let fn =
+                  Builder.pexp_fun ~loc arg_label arg_expression pat
+                    (last_expr_to_raise_impossible original_function_name expr)
+                in
+                let item = { fn with pexp_attributes = expr.pexp_attributes } in
+                [%stri
+                  let ([%p pattern]
+                      [@alert
+                        browser_only
+                          "This expression is marked to only run on the \
+                           browser where JavaScript can run. You can only use \
+                           it inside a let%browser_only function."]) =
+                    [%e item]
+                  [@@warning "-27-32"] [@@alert "-browser_only"]]
+            | Pexp_ident { txt = longident; loc } ->
+                let stringified = Ppxlib.Longident.name longident in
+                let message = Builder.estring ~loc stringified in
+                [%stri
+                  let ([%p pattern]
+                      [@alert
+                        browser_only
+                          "This expression is marked to only run on the \
+                           browser where JavaScript can run. You can only use \
+                           it inside a let%browser_only function."]) =
+                    Runtime.fail_impossible_action_in_ssr [%e message]
+                  [@@alert "-browser_only"]]
+            | _expr -> do_nothing rec_flag
+          in
+          handle_expr expression
     in
     Context_free.Rule.extension
       (Extension.V3.declare "browser_only" Extension.Context.structure_item

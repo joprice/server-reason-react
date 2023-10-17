@@ -1682,21 +1682,16 @@ module Vector = struct
 end
 
 module Console = struct
-  let log a = print_endline (Stdlib.Obj.magic a)
-
-  let log2 a b =
-    print_endline
-      (Printf.sprintf "%s %s" (Stdlib.Obj.magic a) (Stdlib.Obj.magic b))
+  let render obj = Console.ObjectPrinter.(base.polymorphicPrint base obj)
+  let log a = print_endline (render a)
+  let log2 a b = print_endline (Printf.sprintf "%s %s" (render a) (render b))
 
   let log3 a b c =
-    print_endline
-      (Printf.sprintf "%s %s %s" (Stdlib.Obj.magic a) (Stdlib.Obj.magic b)
-         (Stdlib.Obj.magic c))
+    print_endline (Printf.sprintf "%s %s %s" (render a) (render b) (render c))
 
   let log4 a b c d =
     print_endline
-      (Printf.sprintf "%s %s %s %s" (Stdlib.Obj.magic a) (Stdlib.Obj.magic b)
-         (Stdlib.Obj.magic c) (Stdlib.Obj.magic d))
+      (Printf.sprintf "%s %s %s %s" (render a) (render b) (render c) (render d))
 
   let logMany arr = Stdlib.Array.iter log arr
   let info = log
