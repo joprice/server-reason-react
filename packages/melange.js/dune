@@ -8,7 +8,7 @@
  (modules js)
  (public_name server-reason-react.js)
  (flags :standard -w -49)
- (libraries pcre lwt)
+ (libraries pcre lwt console.lib)
  (preprocess
   (pps lwt_ppx)))
 

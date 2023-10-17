@@ -54,6 +54,7 @@
           fmt
           ppxlib
           reason-react
+          reason-native.console
         ];
         nativeBuildInputs = [
           findlib
