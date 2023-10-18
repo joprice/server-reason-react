@@ -279,6 +279,7 @@ let useState (make_initial_value : unit -> 'state) =
   (initial_value, setState)
 
 let useMemo fn = fn ()
+let useMemo0 fn = fn ()
 let useMemo1 fn _ = fn ()
 let useMemo2 fn _ = fn ()
 let useMemo3 fn _ = fn ()
