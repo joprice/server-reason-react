@@ -286,6 +286,7 @@ let useMemo4 fn _ = fn ()
 let useMemo5 fn _ = fn ()
 let useMemo6 fn _ = fn ()
 let useCallback fn = fn
+let useCallback0 fn = fn
 let useCallback1 fn _ = fn
 let useCallback2 fn _ = fn
 let useCallback3 fn _ = fn
