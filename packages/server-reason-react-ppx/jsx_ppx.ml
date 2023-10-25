@@ -1013,6 +1013,16 @@ let makePropField ~loc id (arg_label, value) =
             (React.JSX.Event
                ([%e constantString ~loc jsxName], React.JSX.Inline v))
               [%e objectValue])]
+  | Event { type_ = Drag; jsxName }, false ->
+      [%expr
+        Some
+          (React.JSX.Event
+             ([%e constantString ~loc jsxName], React.JSX.Drag [%e objectValue]))]
+  | Event { type_ = Drag; jsxName }, true ->
+      [%expr
+        Option.map (fun v ->
+            (React.JSX.Event ([%e constantString ~loc jsxName], React.JSX.Drag v))
+              [%e objectValue])]
   | _ -> failwith "Attribute not implemented, open an issue"
 
 let jsxMapper () =

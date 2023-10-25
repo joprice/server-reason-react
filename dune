@@ -2,7 +2,8 @@
  (_
   (flags
    (-warn-error +A-d-58 -alert ++browser_only))))
-   ;(-warn-error +A-d -alert ++browser_only))))
+
+;(-warn-error +A-d -alert ++browser_only))))
 
 (dirs packages demo)
 
