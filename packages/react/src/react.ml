@@ -554,8 +554,9 @@ module Suspense = struct
       { fallback = or_react_null fallback; children = or_react_null children }
 end
 
-(* let memo f : 'props * 'props -> bool = f
-   let memoCustomCompareProps f _compare : 'props * 'props -> bool = f *)
+(* let memo f : 'props * 'props -> bool = f *)
+
+let memoCustomCompareProps f _compare = f
 
 (* `exception Suspend of 'a Lwt`
     exceptions can't have type params, this is called existential wrapper *)
@@ -611,6 +612,7 @@ let useLayoutEffect3 _ _ = ()
 let useLayoutEffect4 _ _ = ()
 let useLayoutEffect5 _ _ = ()
 let useLayoutEffect6 _ _ = ()
+let useDeferredValue v = v
 
 module Children = struct
   let map fn elements = Array.map fn elements
